@@ -186,8 +186,11 @@ body.drawer-open {
 }
 @media (min-width: 1024px) {
     .stats-band__grid {
-        grid-template-columns: repeat(5, 1fr);
+        grid-template-columns: repeat(4, 1fr);
         gap: 1.5rem;
+        max-width: 860px;
+        margin-left: auto;
+        margin-right: auto;
     }
 }
 .stats-band__item {
