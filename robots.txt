@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://drcicerourban.com.br/sitemap.xml
