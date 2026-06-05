@@ -6,6 +6,7 @@ const path = require('path');
 const { pageShell, renderCta, renderTopicSection, renderList, SITE } = require('./includes');
 
 const ROOT = path.dirname(__dirname);
+const IMG = '/assets/images';
 
 function write(rel, content) {
   const file = path.join(ROOT, rel);
@@ -85,7 +86,7 @@ const DOENCAS_TOPICS = [
           'Alterações na pele da mama (vermelhidão, aspecto de casca de laranja)',
           'Dor localizada persistente'
         ],
-        image: 'https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&w=1200&q=80',
+        image: `${IMG}/cancer-de-mama.jpg`,
         imageAlt: 'Consulta de mastologia'
       },
       {
@@ -132,7 +133,7 @@ const DOENCAS_TOPICS = [
           'Achado em exame de imagem sem sintoma clínico',
           'Espessamento localizado diferente do restante do tecido'
         ],
-        image: 'https://images.unsplash.com/photo-1559757148-5c350d0d3c56?auto=format&fit=crop&w=1200&q=80',
+        image: `${IMG}/nodulo-na-mama.jpg`,
         imageAlt: 'Exame clínico da mama'
       }
     ],
@@ -200,7 +201,7 @@ const DOENCAS_TOPICS = [
           'A mama densa não provoca sintomas. O achado aparece exclusivamente no laudo. Há duas implicações: limitação diagnóstica (efeito mascaramento) e risco discretamente aumentado de câncer em comparação com mamas predominantemente gordurosas.',
           'Receber laudo com categorias C ou D é sinal de que a mamografia isolada pode não ser suficiente. A conduta é individual — depende do grau de densidade, idade, histórico familiar e avaliação clínica.'
         ],
-        image: 'https://images.unsplash.com/photo-1584515933487-779824d29309?auto=format&fit=crop&w=1200&q=80',
+        image: `${IMG}/mama-densa.jpg`,
         imageAlt: 'Mamografia e rastreamento'
       }
     ],
@@ -268,7 +269,7 @@ const DOENCAS_TOPICS = [
           'O teste é realizado a partir de sangue ou saliva, com acompanhamento de aconselhamento genético. Um resultado positivo não significa que o câncer vai acontecer — significa que a estratégia de rastreamento e prevenção precisa ser adaptada.',
           'Opções incluem vigilância intensificada, quimioprofilaxia em casos selecionados e, para algumas pacientes, cirurgia redutora de risco. Cada decisão é profundamente pessoal.'
         ],
-        image: 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=1200&q=80',
+        image: `${IMG}/brca1-brca2.jpg`,
         imageAlt: 'Aconselhamento genético'
       }
     ],
@@ -282,12 +283,12 @@ const DOENCAS_CARDS = DOENCAS_TOPICS.map((t, i) => ({
   title: t.label,
   icon: ['fa-solid fa-ribbon', 'fa-solid fa-circle-dot', 'fa-solid fa-shield-heart', 'fa-solid fa-microscope', 'fa-solid fa-magnifying-glass', 'fa-solid fa-dna'][i],
   image: [
-    'https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&w=800&q=80',
-    'https://images.unsplash.com/photo-1559757148-5c350d0d3c56?auto=format&fit=crop&w=800&q=80',
-    'https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&w=800&q=80',
-    'https://images.unsplash.com/photo-1584515933487-779824d29309?auto=format&fit=crop&w=800&q=80',
-    'https://images.unsplash.com/photo-1584515933487-779824d29309?auto=format&fit=crop&w=800&q=80',
-    'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=800&q=80'
+    `${IMG}/cancer-de-mama.jpg`,
+    `${IMG}/nodulo-na-mama.jpg`,
+    `${IMG}/tumores-benignos.jpg`,
+    `${IMG}/mama-densa.jpg`,
+    `${IMG}/microcalcificacoes.jpg`,
+    `${IMG}/brca1-brca2.jpg`
   ][i]
 }));
 
@@ -326,7 +327,7 @@ const PROCEDIMENTOS_TOPICS = [
           'Pacientes com mamas de volume generoso',
           'Casos com assimetria relevante após ressecção conservadora'
         ],
-        image: 'https://images.unsplash.com/photo-1530026405186-ed1f139313f8?auto=format&fit=crop&w=1200&q=80',
+        image: `${IMG}/reconstrucao-mamaria.jpg`,
         imageAlt: 'Cirurgia oncoplástica'
       }
     ],
@@ -395,7 +396,7 @@ const PROCEDIMENTOS_TOPICS = [
           'Quando a mastectomia é indicada, a discussão sobre reconstrução começa desde o início. Simulação 3D pré-operatória permite visualizar o resultado esperado e qualifica o consentimento informado.',
           'A mastectomia não é a única opção — em muitos casos, cirurgia conservadora com oncoplastia oferece segurança equivalente com menor impacto sobre o corpo.'
         ],
-        image: 'https://images.unsplash.com/photo-1551190822-a9333d879b1f?auto=format&fit=crop&w=1200&q=80',
+        image: `${IMG}/procedimentos-mastectomia.jpg`,
         imageAlt: 'Planejamento cirúrgico'
       }
     ],
@@ -475,11 +476,11 @@ const PROC_CARDS = PROCEDIMENTOS_TOPICS.map((t, i) => ({
   title: t.label,
   icon: ['fa-solid fa-hand-holding-medical', 'fa-solid fa-heart-pulse', 'fa-solid fa-user-doctor', 'fa-solid fa-circle-half-stroke', 'fa-solid fa-scissors'][i],
   image: [
-    'https://images.unsplash.com/photo-1530026405186-ed1f139313f8?auto=format&fit=crop&w=800&q=80',
-    'https://images.unsplash.com/photo-1551190822-a9333d879b1f?auto=format&fit=crop&w=800&q=80',
-    'https://images.unsplash.com/photo-1551190822-a9333d879b1f?auto=format&fit=crop&w=800&q=80',
-    'https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&w=800&q=80',
-    'https://images.unsplash.com/photo-1530026405186-ed1f139313f8?auto=format&fit=crop&w=800&q=80'
+    `${IMG}/reconstrucao-mamaria.jpg`,
+    `${IMG}/hero-slide-2-oncoplastica.jpg`,
+    `${IMG}/procedimentos-mastectomia.jpg`,
+    `${IMG}/mastectomia-poupadora.jpg`,
+    `${IMG}/cirurgia-conservadora.jpg`
   ][i]
 }));
 
@@ -537,7 +538,7 @@ function generateDrPage() {
           eyebrow: 'Dr. Cícero Urban',
           title: 'Dr. Cícero Urban, MD PhD',
           subtitle: 'Mastologista e Cirurgião Oncoplástico — décadas dedicadas ao cuidado da mama em todas as suas dimensões.',
-          image: 'https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?auto=format&fit=crop&w=1920&q=80'
+          image: `${IMG}/hero-slide-3-dr-cicero.jpg`
         })}
         <section class="section-page bg-white">
             <div class="container mx-auto px-6">
@@ -558,7 +559,7 @@ function generateDrPage() {
                         <p class="text-gray-600 leading-relaxed">Para o Dr. Cícero, a consulta começa antes do diagnóstico e vai além do pós-operatório. Cada paciente chega com uma história, um medo e uma expectativa que merecem ser ouvidos com a mesma atenção dedicada ao exame clínico.</p>
                     </div>
                     <div class="relative rounded-3xl overflow-hidden shadow-2xl" data-aos="fade-left">
-                        <img loading="lazy" src="https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&w=1200&q=80" alt="Consulta médica" class="w-full h-96 object-cover">
+                        <img loading="lazy" src="${IMG}/consulta-contato.jpg" alt="Consulta médica" class="w-full h-96 object-cover">
                     </div>
                 </div>
             </div>
@@ -638,7 +639,7 @@ function generateContato() {
           eyebrow: 'Contato',
           title: 'Agende sua consulta',
           subtitle: 'Oncoclinica — Curitiba. Atendimento das 09:30 às 18:30. Convênio Unimed.',
-          image: 'https://images.unsplash.com/photo-1588776814546-daab30f310ce?auto=format&fit=crop&w=1920&q=80'
+          image: `${IMG}/consulta-contato.jpg`
         })}
         <section class="section-page bg-white">
             <div class="container mx-auto px-6">
@@ -839,7 +840,7 @@ areasPage({
     eyebrow: 'Doenças e Condições',
     title: 'Doenças e condições da mama',
     subtitle: 'O que cada diagnóstico significa e quais os caminhos possíveis.',
-    image: 'https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&w=1920&q=80',
+    image: `${IMG}/cancer-de-mama.jpg`,
     pills: DOENCAS_CARDS.map((c) => ({ id: c.id, label: c.title }))
   },
   intro: 'Um laudo, um nódulo palpado, um resultado de mamografia. Este espaço existe para organizar esse percurso: explicar o que cada achado pode significar, quando investigar com mais profundidade e quais são as opções reais de tratamento.',
@@ -856,7 +857,7 @@ areasPage({
     eyebrow: 'Procedimentos e Cirurgias',
     title: 'Procedimentos e cirurgias',
     subtitle: 'Como cada intervenção funciona e o que ela muda para a paciente.',
-    image: 'https://images.unsplash.com/photo-1530026405186-ed1f139313f8?auto=format&fit=crop&w=1920&q=80',
+    image: `${IMG}/procedimentos-mastectomia.jpg`,
     pills: PROC_CARDS.map((c) => ({ id: c.id, label: c.title }))
   },
   intro: 'A decisão cirúrgica é uma das mais delicadas de todo o percurso oncológico. O que você encontra aqui são explicações honestas sobre cada técnica: o que envolve, quando é indicada e o que a evidência científica mais atual diz sobre resultados e qualidade de vida.',

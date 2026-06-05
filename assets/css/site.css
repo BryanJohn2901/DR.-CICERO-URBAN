@@ -478,7 +478,7 @@ body.drawer-open {
     background-color: #0F172A;
     background-image:
         linear-gradient(135deg, rgba(15, 23, 42, 0.86) 0%, rgba(15, 23, 42, 0.78) 55%, rgba(15, 118, 110, 0.82) 100%),
-        url('https://images.unsplash.com/photo-1551190822-a9333d879b1f?auto=format&fit=crop&w=1920&q=80');
+        url('/assets/images/consulta-contato.jpg');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
