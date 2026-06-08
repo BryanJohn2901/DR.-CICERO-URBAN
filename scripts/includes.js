@@ -173,7 +173,7 @@ function renderHead({ title, description, canonical, pageId }) {
     <link rel="stylesheet" href="/assets/css/site.css">
     <link rel="stylesheet" href="/assets/css/tailwind-built.css">
 </head>
-<body class="font-sans text-palette-500 bg-white antialiased" data-page="${esc(pageId)}">`;
+<body class="font-sans text-palette-500 bg-brand-light antialiased" data-page="${esc(pageId)}">`;
 }
 
 function renderScripts(extra) {

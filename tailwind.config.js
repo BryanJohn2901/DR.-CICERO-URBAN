@@ -10,39 +10,40 @@ module.exports = {
     extend: {
       colors: {
         brand: {
-          dark: '#0A0F1C',
-          navy: '#1E293B',
-          light: '#F8FAFC',
-          teal: '#0D9488',
-          tealHover: '#0F766E',
-          tealLight: '#CCFBF1'
+          dark: '#302858',
+          navy: '#383060',
+          light: '#E8E8E8',
+          teal: '#D85860',
+          tealHover: '#B84A52',
+          tealLight: '#F5DDE0',
+          blue: '#506878'
         },
-        saude: { light: '#CCFBF1', dark: '#0D9488' },
-        vida: { light: '#E2E8F0', dark: '#94A3B8' },
-        qualidade: { light: '#CBD5E1', dark: '#64748B' },
-        neutral: { light: '#E2E8F0', dark: '#0A0F1C' },
+        saude: { light: '#F5DDE0', dark: '#D85860' },
+        vida: { light: '#E8E8E8', dark: '#888888' },
+        qualidade: { light: '#D8D8D8', dark: '#5A5A5A' },
+        neutral: { light: '#E8E8E8', dark: '#302858' },
         sec: {
           yellow: '#FBBF24',
           orange: '#F97316',
-          red: '#EF4444',
+          red: '#D85860',
           green: '#10B981',
-          blue: '#3B82F6',
-          purple: '#8B5CF6'
+          blue: '#506878',
+          purple: '#383060'
         },
         palette: {
           50: '#FFFFFF',
-          100: '#F1F5F9',
-          200: '#E2E8F0',
-          300: '#CBD5E1',
-          400: '#94A3B8',
-          500: '#64748B'
+          100: '#F2F2F2',
+          200: '#E8E8E8',
+          300: '#D8D8D8',
+          400: '#888888',
+          500: '#5A5A5A'
         }
       },
       backgroundImage: {
-        'gradient-saude': 'linear-gradient(135deg, #CCFBF1 0%, #0D9488 100%)',
-        'gradient-vida': 'linear-gradient(135deg, #E2E8F0 0%, #94A3B8 100%)',
-        'gradient-qualidade': 'linear-gradient(135deg, #CBD5E1 0%, #64748B 100%)',
-        'gradient-neutral': 'linear-gradient(135deg, #E2E8F0 0%, #0A0F1C 100%)'
+        'gradient-saude': 'linear-gradient(135deg, #F5DDE0 0%, #D85860 100%)',
+        'gradient-vida': 'linear-gradient(135deg, #E8E8E8 0%, #888888 100%)',
+        'gradient-qualidade': 'linear-gradient(135deg, #D8D8D8 0%, #5A5A5A 100%)',
+        'gradient-neutral': 'linear-gradient(135deg, #E8E8E8 0%, #302858 100%)'
       },
       fontFamily: {
         sans: ['Inter', 'sans-serif'],
