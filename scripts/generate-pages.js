@@ -537,7 +537,7 @@ function generateDrPage() {
         ${heroPage({
           eyebrow: 'Dr. Cícero Urban',
           title: 'Dr. Cícero Urban, MD PhD',
-          subtitle: 'Mastologista e Cirurgião Oncoplástico — décadas dedicadas ao cuidado da mama em todas as suas dimensões.',
+          subtitle: 'Mastologista — décadas dedicadas ao cuidado da mama em todas as suas dimensões.',
           image: `${IMG}/hero-slide-3-dr-cicero.jpg`
         })}
         <section class="section-page bg-white">
@@ -624,7 +624,7 @@ function generateDrPage() {
   write(
     'dr-cicero-urban/index.html',
     pageShell({
-      title: 'Dr. Cícero Urban | Mastologista e Cirurgião Oncoplástico',
+      title: 'Dr. Cícero Urban | Mastologista',
       description: 'Conheça a trajetória do Dr. Cícero Urban, MD PhD — referência internacional em mastologia e cirurgia oncoplástica da mama em Curitiba.',
       canonical: `${SITE}/dr-cicero-urban/`,
       pageId: 'dr-cicero-urban',
