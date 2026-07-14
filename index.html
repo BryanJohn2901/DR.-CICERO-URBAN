@@ -189,25 +189,40 @@
             </div>
         </section>
 
-        <!-- Vídeo de apresentação (placeholder) -->
+        <!-- Vídeo de apresentação -->
         <section id="video" class="py-24 bg-white">
             <div class="container mx-auto px-6">
                 <div class="grid lg:grid-cols-2 gap-14 items-center">
                     <div data-aos="fade-right">
                         <p class="text-brand-teal font-bold text-sm uppercase tracking-widest mb-3">Apresentação</p>
                         <h2 class="text-3xl md:text-4xl font-display font-black text-brand-dark tracking-tight mb-6">Conheça o Dr. Cícero Urban</h2>
-                        <p class="text-gray-600 text-lg leading-relaxed">Vídeo de apresentação em produção. Enquanto isso, explore a trajetória completa na página dedicada ou agende uma consulta para conversar diretamente.</p>
+                        <p class="text-gray-600 text-lg leading-relaxed">Assista ao vídeo de apresentação. Explore também a trajetória completa na página dedicada ou agende uma consulta para conversar diretamente.</p>
                         <a href="/dr-cicero-urban/" class="mt-8 inline-flex items-center gap-2 text-brand-teal font-semibold hover:gap-3 transition-all">Ver trajetória completa <i class="fa-solid fa-arrow-right"></i></a>
                     </div>
-                    <div class="relative rounded-3xl overflow-hidden shadow-2xl aspect-video bg-brand-dark flex items-center justify-center" data-aos="fade-left">
-                        <div class="text-center text-white p-8">
-                            <div class="w-20 h-20 mx-auto mb-4 rounded-full bg-white/10 border border-white/20 flex items-center justify-center text-3xl"><i class="fa-solid fa-play text-brand-tealLight"></i></div>
-                            <p class="text-sm text-gray-300 uppercase tracking-widest font-semibold">Vídeo em breve</p>
-                        </div>
+                    <div class="relative rounded-3xl overflow-hidden shadow-2xl aspect-video bg-brand-dark" data-aos="fade-left">
+                        <button type="button" id="videoPlayBtn" class="absolute inset-0 w-full h-full flex items-center justify-center group" aria-label="Reproduzir vídeo de apresentação do Dr. Cícero Urban">
+                            <img src="https://i.ytimg.com/vi/c9NKO3lqnG0/maxresdefault.jpg" alt="" class="absolute inset-0 w-full h-full object-cover" loading="lazy">
+                            <span class="absolute inset-0 bg-brand-dark/40 group-hover:bg-brand-dark/30 transition"></span>
+                            <span class="relative w-20 h-20 rounded-full bg-white/10 border border-white/20 flex items-center justify-center text-3xl group-hover:scale-110 transition"><i class="fa-solid fa-play text-brand-tealLight"></i></span>
+                        </button>
                     </div>
                 </div>
             </div>
         </section>
+        <script>
+            document.getElementById('videoPlayBtn')?.addEventListener('click', function () {
+                var wrap = this.parentElement;
+                var iframe = document.createElement('iframe');
+                iframe.src = 'https://www.youtube.com/embed/c9NKO3lqnG0?autoplay=1&rel=0';
+                iframe.title = 'Vídeo de apresentação do Dr. Cícero Urban';
+                iframe.className = 'absolute inset-0 w-full h-full';
+                iframe.frameBorder = '0';
+                iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+                iframe.allowFullscreen = true;
+                wrap.innerHTML = '';
+                wrap.appendChild(iframe);
+            });
+        </script>
 
         <!-- Como posso ajudar -->
         <section id="areas" class="py-24 bg-brand-light">
