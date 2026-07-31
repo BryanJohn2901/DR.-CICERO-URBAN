@@ -1,6 +1,6 @@
 'use strict';
 
-const SITE = 'https://drcicerourban.com.br';
+const SITE = 'https://cicerourban.com.br';
 
 const NAV = [
   { id: 'home', href: '/', label: 'Home' },
@@ -154,15 +154,21 @@ function renderHead({ title, description, canonical, pageId }) {
     <meta name="description" content="${esc(description)}">
     <link rel="canonical" href="${esc(url)}">
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
     <meta property="og:type" content="website">
     <meta property="og:locale" content="pt_BR">
     <meta property="og:site_name" content="Dr. Cícero Urban">
     <meta property="og:title" content="${esc(title)}">
     <meta property="og:description" content="${esc(description)}">
     <meta property="og:url" content="${esc(url)}">
+    <meta property="og:image" content="https://cicerourban.com.br/og-image.webp">
+    <meta property="og:image:alt" content="Dr. Cícero Urban — mastologista em Curitiba">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="${esc(title)}">
     <meta name="twitter:description" content="${esc(description)}">
+    <meta name="twitter:image" content="https://cicerourban.com.br/og-image.webp">
     <script src="/assets/js/config.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

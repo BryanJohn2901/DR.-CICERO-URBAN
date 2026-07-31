@@ -4,6 +4,7 @@
   "scripts": {
     "build": "node build.js",
     "build:css": "tailwindcss -i ./assets/css/tailwind-input.css -o ./assets/css/tailwind-built.css --minify",
+    "optimize:images": "node scripts/optimize-images.js",
     "generate": "node scripts/generate-pages.js",
     "preview": "npm run build && npx --yes serve dist -l 4173",
     "start": "npx --yes serve dist -l 4173"

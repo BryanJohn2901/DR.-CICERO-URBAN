@@ -151,8 +151,7 @@
     }
 
     function initImageFallback() {
-        var fallback =
-            'https://images.pexels.com/photos/8379898/pexels-photo-8379898.jpeg?auto=compress&cs=tinysrgb&w=1200&fit=crop';
+        var fallback = '/assets/images/fallback-imagem-clinica.webp';
         document.querySelectorAll('main img').forEach(function (img) {
             img.addEventListener(
                 'error',
@@ -167,10 +166,88 @@
         });
     }
 
+    function initTestimonialsCarousel() {
+        var root = document.getElementById('testimonialsCarousel');
+        if (!root) return;
+
+        var slides = Array.prototype.slice.call(root.querySelectorAll('.testimonials-carousel__slide'));
+        var dots = Array.prototype.slice.call(root.querySelectorAll('.testimonials-carousel__dot'));
+        var prevBtn = document.getElementById('testimonialsPrev');
+        var nextBtn = document.getElementById('testimonialsNext');
+        if (!slides.length) return;
+
+        var index = 0;
+        var timer = null;
+        var INTERVAL = 7000;
+
+        function goTo(next) {
+            var total = slides.length;
+            index = ((next % total) + total) % total;
+
+            slides.forEach(function (slide, i) {
+                var active = i === index;
+                slide.classList.toggle('is-active', active);
+                if (active) {
+                    slide.removeAttribute('hidden');
+                } else {
+                    slide.setAttribute('hidden', '');
+                }
+            });
+
+            dots.forEach(function (dot, i) {
+                var active = i === index;
+                dot.classList.toggle('is-active', active);
+                dot.setAttribute('aria-selected', active ? 'true' : 'false');
+            });
+        }
+
+        function next() {
+            goTo(index + 1);
+        }
+
+        function prev() {
+            goTo(index - 1);
+        }
+
+        function startAutoplay() {
+            stopAutoplay();
+            timer = window.setInterval(next, INTERVAL);
+        }
+
+        function stopAutoplay() {
+            if (timer) {
+                window.clearInterval(timer);
+                timer = null;
+            }
+        }
+
+        if (prevBtn) prevBtn.addEventListener('click', function () { prev(); startAutoplay(); });
+        if (nextBtn) nextBtn.addEventListener('click', function () { next(); startAutoplay(); });
+
+        dots.forEach(function (dot) {
+            dot.addEventListener('click', function () {
+                var i = parseInt(dot.getAttribute('data-index'), 10);
+                if (!isNaN(i)) goTo(i);
+                startAutoplay();
+            });
+        });
+
+        root.addEventListener('mouseenter', stopAutoplay);
+        root.addEventListener('mouseleave', startAutoplay);
+        root.addEventListener('focusin', stopAutoplay);
+        root.addEventListener('focusout', function (e) {
+            if (!root.contains(e.relatedTarget)) startAutoplay();
+        });
+
+        goTo(0);
+        startAutoplay();
+    }
+
     document.addEventListener('DOMContentLoaded', function () {
         initHeader();
         initAOS();
         initImageFallback();
+        initTestimonialsCarousel();
     });
 
     document.addEventListener('cicero:layout-ready', function () {

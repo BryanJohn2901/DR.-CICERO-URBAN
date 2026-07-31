@@ -357,6 +357,9 @@ body.drawer-open {
 /* Depoimento */
 .testimonial-card {
     position: relative;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
     padding: 2rem 2rem 2rem 2.5rem;
     background: #F2F2F2;
     border-radius: 1.25rem;
@@ -375,6 +378,7 @@ body.drawer-open {
 .testimonial-card__text {
     position: relative;
     z-index: 1;
+    flex: 1;
     font-size: 1.05rem;
     line-height: 1.65;
     color: #5A5A5A;
@@ -390,6 +394,112 @@ body.drawer-open {
     font-size: 0.8rem;
     color: #5A5A5A;
     font-weight: 500;
+}
+
+/* Carrossel de depoimentos — 2 por vez */
+.testimonials-carousel {
+    position: relative;
+    width: 100%;
+}
+.testimonials-carousel__viewport {
+    overflow: hidden;
+}
+.testimonials-carousel__track {
+    position: relative;
+}
+.testimonials-carousel__slide {
+    display: none;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    align-items: stretch;
+    animation: testimonials-fade 0.45s ease;
+}
+.testimonials-carousel__slide.is-active {
+    display: grid;
+}
+.testimonials-carousel__slide[hidden] {
+    display: none !important;
+}
+@keyframes testimonials-fade {
+    from { opacity: 0; transform: translateX(12px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+.testimonials-carousel__controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 1.75rem;
+}
+.testimonials-carousel__btn {
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: 9999px;
+    border: 1px solid rgba(48, 40, 88, 0.15);
+    background: #fff;
+    color: #302858;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+.testimonials-carousel__btn:hover {
+    background: #302858;
+    color: #fff;
+    border-color: #302858;
+}
+.testimonials-carousel__btn:focus-visible {
+    outline: 2px solid #D85860;
+    outline-offset: 2px;
+}
+.testimonials-carousel__dots {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+.testimonials-carousel__dot {
+    width: 0.55rem;
+    height: 0.55rem;
+    border-radius: 9999px;
+    border: 0;
+    padding: 0;
+    background: rgba(48, 40, 88, 0.25);
+    cursor: pointer;
+    transition: width 0.25s ease, background 0.25s ease;
+}
+.testimonials-carousel__dot.is-active {
+    width: 1.35rem;
+    background: #D85860;
+}
+.testimonials-carousel__dot:focus-visible {
+    outline: 2px solid #D85860;
+    outline-offset: 2px;
+}
+@media (max-width: 767px) {
+    .testimonials-carousel__slide.is-active {
+        grid-template-columns: 1fr 1fr;
+        gap: 0.75rem;
+    }
+    .testimonial-card {
+        padding: 1.25rem 1rem 1.25rem 1.15rem;
+    }
+    .testimonial-card::before {
+        font-size: 2.5rem;
+        top: 0.35rem;
+        left: 0.5rem;
+    }
+    .testimonial-card__text {
+        font-size: 0.88rem;
+        line-height: 1.5;
+    }
+    .testimonial-card__author {
+        font-size: 0.8rem;
+        margin-top: 0.85rem;
+    }
+    .testimonial-card__role {
+        font-size: 0.72rem;
+    }
 }
 
 /* Header responsivo */
@@ -529,7 +639,7 @@ body.drawer-open {
     background-color: #302858;
     background-image:
         linear-gradient(135deg, rgba(48, 40, 88, 0.86) 0%, rgba(48, 40, 88, 0.78) 55%, rgba(216, 88, 96, 0.82) 100%),
-        url('/assets/images/consulta-contato.jpg');
+        url('/assets/images/consulta-contato.webp');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -673,6 +783,56 @@ body.drawer-open {
 }
 .faq-item.active .faq-icon {
     transform: rotate(180deg);
+}
+
+/* FAQ acessível (details/summary) — GEO/AEO */
+.seo-faq-item {
+    background: #F2F2F2;
+    border: 1px solid #D8D8D8;
+    border-radius: 1rem;
+    padding: 0;
+    overflow: hidden;
+}
+.seo-faq-item__q {
+    list-style: none;
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 1.05rem;
+    color: #302858;
+    padding: 1.15rem 1.35rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+}
+.seo-faq-item__q::-webkit-details-marker { display: none; }
+.seo-faq-item__q::after {
+    content: '+';
+    flex-shrink: 0;
+    width: 1.75rem;
+    height: 1.75rem;
+    border-radius: 999px;
+    background: rgba(216, 88, 96, 0.12);
+    color: #D85860;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    font-weight: 600;
+    line-height: 1;
+}
+.seo-faq-item[open] .seo-faq-item__q::after { content: '−'; }
+.seo-faq-item__a {
+    padding: 0 1.35rem 1.25rem;
+}
+.seo-faq-item__a p {
+    margin: 0;
+    color: #5A5A5A;
+    line-height: 1.65;
+    font-size: 0.975rem;
+}
+.seo-faq-item__a a:hover {
+    text-decoration: underline;
 }
 #searchModal:not(.hidden) #searchInput {
     animation: searchFocus 0.2s ease-out;

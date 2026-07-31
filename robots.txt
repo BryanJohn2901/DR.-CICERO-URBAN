@@ -1,4 +1,7 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://drcicerourban.com.br/sitemap.xml
+# Orientação para LLMs (padrão emergente)
+# https://cicerourban.com.br/llms.txt
+
+Sitemap: https://cicerourban.com.br/sitemap.xml

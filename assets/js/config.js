@@ -9,7 +9,7 @@ window.CICERO_CONFIG = {
     phoneClinic: '(41) 3335-3300',
     contactEmail: '',
     addressDisplay: 'Oncoclinica — Rua Profª. Rosa Saporski, 320 — Mercês — Curitiba, PR',
-    siteUrl: 'https://drcicerourban.com.br',
+    siteUrl: 'https://cicerourban.com.br',
     whatsappLabel: 'Agendar Consulta',
     whatsappWidgetTitle: 'Dr. Cícero Urban',
     whatsappWidgetGreeting: 'Olá! Gostaria de agendar uma consulta ou tirar dúvidas sobre mastologia e cirurgia oncoplástica. Estamos à disposição pelo WhatsApp.',

@@ -30,7 +30,14 @@ function applyCacheBusting(content, buildId) {
   return content
     .replace(/((?:href|src)=["'])(\/(?:css|js)\/[^"']+\.(?:css|js))(")/gi, tag)
     .replace(/((?:href|src)=["'])(\/assets\/[^"']+\.(?:jpe?g|png|webp|svg|gif|pdf|ico))(")/gi, tag)
-    .replace(/((?:href|src)=["'])(\/(?:favicon\.svg|logo[^"']*\.(?:png|jpe?g|svg)|og-image\.jpg))(")/gi, tag);
+    .replace(/((?:href|src)=["'])(\/(?:favicon\.svg|apple-touch-icon\.png|logo[^"']*\.(?:png|jpe?g|svg|webp)|og-image\.(?:jpg|webp)|llms\.txt))(")/gi, tag)
+    // srcset: /assets/foo-800w.webp 800w, ...
+    .replace(/(srcset=["'])([^"']+)(["'])/gi, (m, pre, value, post) => {
+      const next = value.replace(/(\/assets\/[^\s,]+\.(?:jpe?g|png|webp|svg))/gi, (u) => (u.includes('?') ? u : `${u}${q}`));
+      return `${pre}${next}${post}`;
+    })
+    // preload etc.
+    .replace(/(<(?:link)[^>]+href=["'])(\/assets\/[^"']+\.webp)(["'])/gi, tag);
 }
 
 function log(msg) { process.stdout.write(`\x1b[36m→\x1b[0m ${msg}\n`); }
@@ -98,15 +105,22 @@ function buildTailwind() {
 }
 
 // ─── STEP 2: CSS ─────────────────────────────────────────────────────────────
-async function buildCSS() {
+async function buildCSS(buildId) {
   log('Minificando CSS → dist/css/');
   const cleancss = new CleanCSS({ level: 2, returnPromise: true });
   const cssFiles = ['site.css', 'tailwind-built.css'];
+  const q = `?v=${buildId}`;
 
   for (const file of cssFiles) {
     const src = path.join(ROOT, 'assets', 'css', file);
     if (!fs.existsSync(src)) { warn(`CSS não encontrado: ${file}`); continue; }
-    const raw = readText(src);
+    let raw = rewritePaths(readText(src));
+    // Cache-bust local asset URLs inside CSS (background-image etc.)
+    raw = raw.replace(/url\(\s*(['"]?)(\/(?:assets|css|js)\/[^'")\s]+)\1\s*\)/g, (m, quote, url) => {
+      if (url.includes('?')) return m;
+      const qmark = quote || "'";
+      return `url(${qmark}${url}${q}${qmark})`;
+    });
     const result = await cleancss.minify(raw);
     if (result.errors.length) { warn(`CSS erros em ${file}: ${result.errors.join(', ')}`); }
     writeText(path.join(DIST, 'css', file), result.styles);
@@ -148,30 +162,57 @@ async function buildImages() {
       if (entry.isDirectory()) { await processDir(srcPath, destPath); continue; }
 
       const ext = path.extname(entry.name).toLowerCase();
+      // Skip legacy JPEG/PNG sources when a WebP sibling exists — HTML aponta só para .webp
+      if (['.jpg', '.jpeg', '.png'].includes(ext)) {
+        const webpSibling = path.join(srcDir, path.basename(entry.name, ext) + '.webp');
+        if (fs.existsSync(webpSibling)) continue;
+      }
       const inKB = kb(fs.statSync(srcPath).size);
 
-      if (['.jpg', '.jpeg'].includes(ext)) {
+      if (ext === '.webp') {
         try {
-          await sharp(srcPath).jpeg({ quality: 80, mozjpeg: true }).toFile(destPath);
+          const meta = await sharp(srcPath).metadata();
+          const needsResize = (meta.width || 0) > 1920 || (meta.height || 0) > 1920;
+          if (needsResize) {
+            await sharp(srcPath)
+              .resize({ width: 1920, height: 1920, fit: 'inside', withoutEnlargement: true })
+              .webp({ quality: 78, effort: 4 })
+              .toFile(destPath);
+          } else {
+            fs.copyFileSync(srcPath, destPath);
+          }
           ok(`  ${entry.name}  ${inKB} → ${kb(fs.statSync(destPath).size)}`);
         } catch (e) {
           warn(`  sharp falhou em ${entry.name}: ${e.message} — copiando original`);
           fs.copyFileSync(srcPath, destPath);
         }
+      } else if (['.jpg', '.jpeg'].includes(ext)) {
+        try {
+          const out = path.join(destDir, path.basename(entry.name, ext) + '.webp');
+          await sharp(srcPath)
+            .rotate()
+            .resize({ width: 1920, height: 1920, fit: 'inside', withoutEnlargement: true })
+            .webp({ quality: 78, effort: 4 })
+            .toFile(out);
+          ok(`  ${path.basename(out)}  ${inKB} → ${kb(fs.statSync(out).size)}`);
+        } catch (e) {
+          warn(`  sharp falhou em ${entry.name}: ${e.message}`);
+          fs.copyFileSync(srcPath, destPath);
+        }
       } else if (ext === '.png') {
         try {
-          const srcSize = fs.statSync(srcPath).size;
-          await sharp(srcPath).png({ compressionLevel: 9 }).toFile(destPath);
-          const destSize = fs.statSync(destPath).size;
-          if (destSize >= srcSize) {
-            fs.copyFileSync(srcPath, destPath); // sharp made it larger — keep original
-            ok(`  ${entry.name}  ${inKB} (já otimizado, copiado)`);
-          } else {
-            ok(`  ${entry.name}  ${inKB} → ${kb(destSize)}`);
-          }
+          const out = path.join(destDir, path.basename(entry.name, ext) + '.webp');
+          await sharp(srcPath)
+            .resize({ width: 1920, height: 1920, fit: 'inside', withoutEnlargement: true })
+            .webp({ quality: 80, effort: 4 })
+            .toFile(out);
+          ok(`  ${path.basename(out)}  ${inKB} → ${kb(fs.statSync(out).size)}`);
         } catch (e) {
           fs.copyFileSync(srcPath, destPath);
         }
+      } else if (['.svg', '.gif', '.ico', '.pdf', '.woff', '.woff2', '.ttf'].includes(ext)) {
+        fs.copyFileSync(srcPath, destPath);
+        ok(`  ${entry.name}  ${inKB} (copiado)`);
       } else {
         fs.copyFileSync(srcPath, destPath);
       }
@@ -192,7 +233,7 @@ async function buildImages() {
   }
 }
 
-const SITE_ORIGIN = 'https://drcicerourban.com.br';
+const SITE_ORIGIN = 'https://cicerourban.com.br';
 
 const SITEMAP_META = {
   'index.html':                                              { changefreq: 'weekly',  priority: '1.0' },
@@ -278,7 +319,10 @@ function copyRootFiles() {
   log('Copiando arquivos raiz → dist/');
   const files = [
     'favicon.svg', 'logo.png', 'logo.svg',
+    'og-image.webp',
+    'apple-touch-icon.png',
     'robots.txt',
+    'llms.txt',
     '.htaccess', // Apache — clean URLs, cache, segurança, redirects
   ];
   for (const f of files) {
@@ -365,7 +409,7 @@ async function main() {
   mkdirp(path.join(DIST, 'js'));
   mkdirp(path.join(DIST, 'assets'));
 
-  await buildCSS();
+  await buildCSS(buildId);
   await buildJS();
   await buildImages();
   copyRootFiles();
